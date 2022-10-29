@@ -1,26 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useEffect } from "react";
+import styled from "styled-components/macro";
+import dayjs from "./utils/dayjs";
+import { useDispatch } from "react-redux";
+import { updateFirstDayOfCurMonth, updateToday } from "./redux/date";
+import Month from "./components/Month/Month";
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const date = new Date();
+
+    dispatch(
+      updateFirstDayOfCurMonth(
+        dayjs(new Date(date.getFullYear(), date.getMonth(), 1, 0, 0)).format()
+      )
+    );
+
+    dispatch(updateToday(dayjs(date.setHours(0, 0, 0, 0)).format()));
+  }, [dispatch]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <S_Layout>
+      <Month />
+    </S_Layout>
   );
 }
+
+const S_Layout = styled.div`
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 
 export default App;
