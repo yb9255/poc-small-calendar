@@ -1,19 +1,16 @@
 import dayjs from "../../utils/dayjs";
-import { Fragment } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { Fragment, useContext } from "react";
 import styled from "styled-components/macro";
-import type { RootState } from "../../redux";
 import { getMonthTable } from "../../utils/helpers";
 import { Day } from "../Day";
 import { HARDCODED_DAY_KO } from "../../constants";
 import { ArrowLeft, ArrowRight } from "../../icons";
-import { updateFirstDayOfCurMonth, updateSelectedDay } from "../../redux/date";
+import DateContext from "../../store";
 
 function Month() {
-  const dispatch = useDispatch();
-  const firstDayOfCurMonth = useSelector(
-    (state: RootState) => state.date.firstDayOfCurMonth
-  );
+  const { firstDayOfCurMonth, setFirstDayOfCurMonth, setSelectedDay } =
+    useContext(DateContext);
+
   const firstDayOfCurMonthDetail = dayjs(new Date(firstDayOfCurMonth));
   const firstDayOfCurMonthYear = firstDayOfCurMonthDetail.year();
   const firstDayOfCurMonthIndex = firstDayOfCurMonthDetail.month();
@@ -28,27 +25,23 @@ function Month() {
       : [];
 
   const handleMoveToPrevMonth = () => {
-    dispatch(
-      updateFirstDayOfCurMonth(
-        dayjs(
-          new Date(firstDayOfCurMonthYear, firstDayOfCurMonthIndex - 1, 1)
-        ).format()
-      )
+    setFirstDayOfCurMonth(
+      dayjs(
+        new Date(firstDayOfCurMonthYear, firstDayOfCurMonthIndex - 1, 1)
+      ).format()
     );
 
-    dispatch(updateSelectedDay(null));
+    setSelectedDay(null);
   };
 
   const handleMoveToNextMonth = () => {
-    dispatch(
-      updateFirstDayOfCurMonth(
-        dayjs(
-          new Date(firstDayOfCurMonthYear, firstDayOfCurMonthIndex + 1, 1)
-        ).format()
-      )
+    setFirstDayOfCurMonth(
+      dayjs(
+        new Date(firstDayOfCurMonthYear, firstDayOfCurMonthIndex + 1, 1)
+      ).format()
     );
 
-    dispatch(updateSelectedDay(null));
+    setSelectedDay(null);
   };
 
   return (

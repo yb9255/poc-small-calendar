@@ -1,12 +1,12 @@
-import { RootState } from "../../redux/index";
-import { useSelector } from "react-redux";
+import { useContext } from "react";
 import dayjs from "../../utils/dayjs";
 import { DateInfoTypes, dateState } from "../../constants";
+import DateContext from "../../store";
 
 function useDayStates(dateInfo: DateInfoTypes) {
-  const selectedDay = useSelector((state: RootState) => state.date.selectedDay);
+  const { selectedDay, today } = useContext(DateContext);
+
   const selectedDayDetail = selectedDay ? dayjs(new Date(selectedDay)) : null;
-  const today = useSelector((state: RootState) => state.date.today);
   const todayDetail = dayjs(new Date(today));
 
   const { state: curDateState, details: curDateDetails } = dateInfo;

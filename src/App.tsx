@@ -1,24 +1,21 @@
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
 import styled from "styled-components/macro";
 import dayjs from "./utils/dayjs";
-import { useDispatch } from "react-redux";
-import { updateFirstDayOfCurMonth, updateToday } from "./redux/date";
 import Month from "./components/Month/Month";
+import DateContext from "./store";
 
 function App() {
-  const dispatch = useDispatch();
+  const { setFirstDayOfCurMonth, setToday } = useContext(DateContext);
 
   useEffect(() => {
     const date = new Date();
 
-    dispatch(
-      updateFirstDayOfCurMonth(
-        dayjs(new Date(date.getFullYear(), date.getMonth(), 1, 0, 0)).format()
-      )
+    setFirstDayOfCurMonth(
+      dayjs(new Date(date.getFullYear(), date.getMonth(), 1, 0, 0)).format()
     );
 
-    dispatch(updateToday(dayjs(date.setHours(0, 0, 0, 0)).format()));
-  }, [dispatch]);
+    setToday(dayjs(date.setHours(0, 0, 0, 0)).format());
+  }, []);
 
   return (
     <S_Layout>

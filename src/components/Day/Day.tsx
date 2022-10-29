@@ -1,21 +1,22 @@
-import { useDispatch } from "react-redux";
+import { useContext } from "react";
 import { DateInfoTypes } from "../../constants";
 import styled, { css } from "styled-components/macro";
-import { updateSelectedDay } from "../../redux/date";
 import { useDayStates } from "../../hooks";
+import DateContext from "../../store";
 
 interface DayProps {
   dateInfo: DateInfoTypes;
 }
 
 function Day({ dateInfo }: DayProps) {
-  const dispatch = useDispatch();
+  const { setSelectedDay } = useContext(DateContext);
+
   const { isDisabledDay, isOutOfThisMonthWeek, isSelectedDay, isToday } =
     useDayStates(dateInfo);
 
   const handleSelectDay = () => {
     if (isDisabledDay) return;
-    dispatch(updateSelectedDay(dateInfo.details.format()));
+    setSelectedDay(dateInfo.details.format());
   };
 
   return (

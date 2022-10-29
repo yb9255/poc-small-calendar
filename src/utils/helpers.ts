@@ -1,10 +1,7 @@
 import { dateState, DateInfoTypes } from "../constants";
 import dayjs from "./dayjs";
 
-export function getMonthTable(
-  currentYear = dayjs().year(),
-  firstDayOfCurMonth = dayjs().month()
-) {
+export function getMonthTable(currentYear: number, firstDayOfCurMonth: number) {
   const firstDayOfWeekCurMonth = dayjs(
     new Date(currentYear, firstDayOfCurMonth, 1)
   ).day();
