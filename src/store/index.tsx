@@ -1,11 +1,13 @@
 import React, {
   useState,
+  useEffect,
   createContext,
   useMemo,
   Dispatch,
   SetStateAction,
 } from "react";
 
+import dayjs from "../utils/dayjs";
 interface dateContextTypes {
   firstDayOfCurMonth: string;
   today: string;
@@ -32,6 +34,16 @@ export function DateContextProvider({
   const [firstDayOfCurMonth, setFirstDayOfCurMonth] = useState("");
   const [today, setToday] = useState("");
   const [selectedDay, setSelectedDay] = useState<string | null>(null);
+
+  useEffect(() => {
+    const date = new Date();
+
+    setFirstDayOfCurMonth(
+      dayjs(new Date(date.getFullYear(), date.getMonth(), 1, 0, 0)).format()
+    );
+
+    setToday(dayjs(date.setHours(0, 0, 0, 0)).format());
+  }, []);
 
   const value = useMemo(
     () => ({
