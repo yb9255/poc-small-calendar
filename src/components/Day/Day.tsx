@@ -14,6 +14,7 @@ function Day({ dateInfo }: DayProps) {
     useDayStates(dateInfo);
 
   const handleSelectDay = () => {
+    if (isOutOfThisMonthWeek) return;
     dispatch(updateSelectedDay(dateInfo.details.format()));
   };
 
