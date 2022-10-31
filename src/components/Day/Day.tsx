@@ -14,7 +14,6 @@ function Day({ dateInfo }: DayProps) {
     useDayStates(dateInfo);
 
   const handleSelectDay = () => {
-    if (isDisabledDay) return;
     dispatch(updateSelectedDay(dateInfo.details.format()));
   };
 
@@ -52,7 +51,8 @@ const S_DayWrapper = styled.div<DayWrapperProps>`
   align-items: center;
   border-radius: 10px;
   ${({ isSelectedDay }) => isSelectedDay && selectedDay};
-  ${({ isDisabledDay }) => isDisabledDay && disabledDay}
+  ${({ isDisabledDay, isSelectedDay }) =>
+    isDisabledDay && !isSelectedDay && disabledDay}
   font-weight: ${({ isToday }) => (isToday ? "bold" : "normal")};
 `;
 
