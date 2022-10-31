@@ -16,7 +16,8 @@ function useDayStates(dateInfo: DateInfoTypes) {
     selectedDayDetail.format("YY-MM-DD") === curDateDetails.format("YY-MM-DD");
 
   const isToday =
-    todayDetail.format("YY-MM-DD") === curDateDetails.format("YY-MM-DD");
+    todayDetail.format("YY-MM-DD") === curDateDetails.format("YY-MM-DD") &&
+    curDateState === dateState.thisMonthDate;
 
   const isOutOfThisMonthWeek =
     curDateState === dateState.nextMonthDateOutOfThisMonthWeek;
