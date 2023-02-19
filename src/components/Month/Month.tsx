@@ -2,18 +2,16 @@ import dayjs from "../../utils/dayjs";
 import { Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components/macro";
-import type { RootState } from "../../redux";
 import { getMonthTable } from "../../utils/helpers";
 import { Day } from "../Day";
 import { HARDCODED_DAY_KO } from "../../constants";
 import { ArrowLeft, ArrowRight } from "../../icons";
 import { updateFirstDayOfCurMonth, updateSelectedDay } from "../../redux/date";
+import { getFirstDayOfCurMonth } from "../../redux/selectors";
 
 function Month() {
   const dispatch = useDispatch();
-  const firstDayOfCurMonth = useSelector(
-    (state: RootState) => state.date.firstDayOfCurMonth
-  );
+  const firstDayOfCurMonth = useSelector(getFirstDayOfCurMonth);
   const firstDayOfCurMonthDetail = dayjs(new Date(firstDayOfCurMonth));
   const firstDayOfCurMonthYear = firstDayOfCurMonthDetail.year();
   const firstDayOfCurMonthIndex = firstDayOfCurMonthDetail.month();
@@ -107,7 +105,7 @@ const S_ArrowWrapper = styled.div`
 
 const S_DayOfWeekContainer = styled.div`
   display: grid;
-  width: 350px;
+  width: 77vw;
   grid-template-columns: repeat(7, minmax(0, 1fr));
   margin-bottom: 15px;
 `;
@@ -119,10 +117,10 @@ const S_DayOfWeek = styled.div`
 `;
 
 const S_MonthTableContainer = styled.div`
-  width: 350px;
-  height: 300px;
+  width: 77vw;
   display: grid;
-  grid-template-columns: repeat(7, minmax(0, 1fr));
-  grid-template-rows: repeat(6, minmax(0, 1fr));
+  grid-template-columns: repeat(7, minmax(50px, 11vw));
+  grid-template-rows: repeat(6, minmax(50px, 11vw));
+  border-bottom: 1px solid black;
 `;
 export default Month;

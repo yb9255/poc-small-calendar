@@ -1,12 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-interface InitialType {
+interface InitialStateTypes {
   firstDayOfCurMonth: string;
   today: string;
   selectedDay: string | null;
 }
 
-const initialState: InitialType = {
+const initialState: InitialStateTypes = {
   firstDayOfCurMonth: "",
   today: "",
   selectedDay: null,

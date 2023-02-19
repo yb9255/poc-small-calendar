@@ -1,12 +1,12 @@
-import { RootState } from "../../redux/index";
 import { useSelector } from "react-redux";
 import dayjs from "../../utils/dayjs";
-import { DateInfoTypes, dateState } from "../../constants";
+import { DateInfoTypes, dateState, DUMMY_BOOKING_DATA } from "../../constants";
+import { getSelectedDay, getToday } from "../../redux/selectors";
 
 function useDayStates(dateInfo: DateInfoTypes) {
-  const selectedDay = useSelector((state: RootState) => state.date.selectedDay);
+  const selectedDay = useSelector(getSelectedDay);
   const selectedDayDetail = selectedDay ? dayjs(new Date(selectedDay)) : null;
-  const today = useSelector((state: RootState) => state.date.today);
+  const today = useSelector(getToday);
   const todayDetail = dayjs(new Date(today));
 
   const { state: curDateState, details: curDateDetails } = dateInfo;
@@ -26,11 +26,16 @@ function useDayStates(dateInfo: DateInfoTypes) {
     curDateState !== dateState.thisMonthDate ||
     curDateDetails.unix() < todayDetail.unix();
 
+  const hasBooking = DUMMY_BOOKING_DATA.some((booking) => {
+    return booking.date === curDateDetails.format();
+  });
+
   return {
     isSelectedDay,
     isToday,
     isOutOfThisMonthWeek,
     isDisabledDay,
+    hasBooking,
   };
 }
 

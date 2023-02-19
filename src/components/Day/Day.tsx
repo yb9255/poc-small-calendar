@@ -10,8 +10,13 @@ interface DayProps {
 
 function Day({ dateInfo }: DayProps) {
   const dispatch = useDispatch();
-  const { isDisabledDay, isOutOfThisMonthWeek, isSelectedDay, isToday } =
-    useDayStates(dateInfo);
+  const {
+    isDisabledDay,
+    isOutOfThisMonthWeek,
+    isSelectedDay,
+    isToday,
+    hasBooking,
+  } = useDayStates(dateInfo);
 
   const handleSelectDay = () => {
     if (isOutOfThisMonthWeek) return;
@@ -26,6 +31,7 @@ function Day({ dateInfo }: DayProps) {
       onClick={handleSelectDay}
     >
       {!isOutOfThisMonthWeek && dateInfo.details.date()}
+      {hasBooking && !isOutOfThisMonthWeek && !isSelectedDay && <S_Dot />}
     </S_DayWrapper>
   );
 }
@@ -47,14 +53,23 @@ interface DayWrapperProps {
 
 const S_DayWrapper = styled.div<DayWrapperProps>`
   display: flex;
-  flex-direction: column;
+  border-radius: 10px;
   justify-content: center;
   align-items: center;
-  border-radius: 10px;
   ${({ isSelectedDay }) => isSelectedDay && selectedDay};
   ${({ isDisabledDay, isSelectedDay }) =>
     isDisabledDay && !isSelectedDay && disabledDay}
   font-weight: ${({ isToday }) => (isToday ? "bold" : "normal")};
+  position: relative;
+`;
+
+const S_Dot = styled.div`
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  position: absolute;
+  bottom: 4px;
+  background-color: #aaa;
 `;
 
 export default Day;
